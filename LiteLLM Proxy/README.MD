@@ -198,24 +198,7 @@ The proxy will be available at: `http://localhost:4000`
 
 ---
 
-### 8. Check the Proxy
-
-From your Jupyter notebook:
-
-```python
-import requests
-
-response = requests.get("http://localhost:4000/health/liveliness")
-
-print(response.status_code)
-print(response.text)
-```
-
-A successful response returns HTTP `200`.
-
----
-
-### 9. Create the Anthropic Client
+### 8. Create the Anthropic Client
 
 The notebook uses the official Anthropic SDK:
 
@@ -229,7 +212,7 @@ client = Anthropic(api_key="anything", base_url="http://localhost:4000")
 
 ---
 
-### 10. Send Your First Request
+### 9. Send Your First Request
 
 Define the model alias (must match `model_name` in `config.yaml`) and create a message:
 
@@ -262,56 +245,6 @@ LiteLLM
 gemini/gemini-2.5-flash
       ↓
 Google Gemini API
-```
-
----
-
-### 11. Create a Reusable Function
-
-```python
-def ask_gemini(prompt, max_tokens=1000):
-    response = client.messages.create(
-        model="gemini",
-        max_tokens=max_tokens,
-        messages=[
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ]
-    )
-    return response.content[0].text
-```
-
-Use it:
-
-```python
-answer = ask_gemini(
-    "What are the main differences between Python and JavaScript?"
-)
-
-print(answer)
-```
-
----
-
-### 12. Streaming
-
-The Anthropic SDK supports streaming:
-
-```python
-with client.messages.stream(
-    model="gemini",
-    max_tokens=1000,
-    messages=[
-        {
-            "role": "user",
-            "content": "Write a short story about a robot exploring Mars."
-        }
-    ]
-) as stream:
-    for text in stream.text_stream:
-        print(text, end="", flush=True)
 ```
 
 ---
@@ -392,22 +325,6 @@ response = requests.get("http://localhost:4000/health/liveliness")
 
 print(response.status_code)
 print(response.text)
-```
-
----
-
-### `Anthropic.__init__() takes 1 positional argument`
-
-Always pass `api_key` as a keyword argument:
-
-```python
-# Correct
-client = Anthropic(api_key="anything", base_url="http://localhost:4000")
-```
-
-```python
-# Incorrect — raises TypeError
-client = Anthropic("anything", base_url="http://localhost:4000")
 ```
 
 ---
