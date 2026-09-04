@@ -180,6 +180,14 @@ LiteLLM Proxy runs separately from the Jupyter notebook.
 
 Open a VS Code terminal.
 
+Load the `.env` file into your shell session so the proxy picks up the API keys:
+
+```bash
+set -a
+source .env
+set +a
+```
+
 If the `litellm` command is available:
 
 ```bash
